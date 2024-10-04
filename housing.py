@@ -62,19 +62,20 @@ st.write(f"Root Mean Squared Error: {rmse:.4f}")
 st.subheader("Predict House Price")
 input_features = {}
 for feature in X.columns:
-    input_features[feature] = st.number_input(feature)
+    input_features[feature] = st.slider(feature, min_value=X[feature].min(), max_value=X[feature].max())
 
 # Create a DataFrame from input features
 input_df = pd.DataFrame([input_features])
 
-if st.button("Predict"):
-
-    # Scale the input features
+if st.button('Predict'):
+    # Scale input features
     input_df_sc = scaler.transform(input_df)
+    
     # Make prediction
     prediction = model.predict(input_df_sc)
+    
     # Display prediction
     st.write(f"Predicted House Price: ${prediction[0]*100000:.2f}")
+
 else:
-    st.write("Please click the 'Predict' button to get the predicted house price.")
-    
+    st.write("Click 'Predict' to get the prediction")
